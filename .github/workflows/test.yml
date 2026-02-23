@@ -12,5 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: bahmutov/npm-install@v1
-      - run: npm run lint (Run ESLint)
-      - run: npm run test (Run Jest)
+
+      - name: Run ESLint
+        run: npm run lint
+      - name: Run Jest
+        run: npm run test
