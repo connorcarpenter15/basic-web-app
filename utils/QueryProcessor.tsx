@@ -48,5 +48,19 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
+  if (query.toLowerCase().includes("both a square and a cube")) {
+    const numbers = query.match(/\d+/g);
+    if (numbers) {
+      const matches = numbers.filter((n) => {
+        const num = parseInt(n);
+        // Using Math.round helps avoid floating point precision errors
+        const isSquare = Math.round(Math.sqrt(num)) ** 2 === num;
+        const isCube = Math.round(Math.cbrt(num)) ** 3 === num;
+        return isSquare && isCube;
+      });
+      return matches.join(", ");
+    }
+  }
+
   return "";
 }
