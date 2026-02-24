@@ -18,6 +18,35 @@ export default function QueryProcessor(query: string): string {
     return "ccarpent";
   }
 
+  if (
+    query.toLowerCase().startsWith("what is") &&
+    query.toLowerCase().match(/plus|minus|multiplied by|divided by/)
+  ) {
+    // 1. Strip out "What is " and the question mark
+    // 2. Translate English words into mathematical operators
+    const expression = query
+      .toLowerCase()
+      .replace("what is ", "")
+      .replace("?", "")
+      .replace(/multiplied by/g, "*")
+      .replace(/divided by/g, "/")
+      .replace(/plus/g, "+")
+      .replace(/minus/g, "-")
+      .trim();
+
+    // Regex check to ensure the string ONLY contains numbers, spaces, and valid math operators.
+    // This is a safety measure before evaluating.
+    if (/^[0-9\s\+\-\*\/]+$/.test(expression)) {
+      try {
+        // new Function safely evaluates the math string and respects standard order of operations
+        const result = new Function(`return ${expression}`)();
+        return Math.round(result).toString();
+      } catch (error) {
+        // If calculation fails for any reason, let it fall through to other handlers
+      }
+    }
+  }
+
   if (query.toLowerCase().includes("plus")) {
     // Find numbers
     const numbers = query.match(/\d+/g);
