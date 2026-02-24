@@ -45,6 +45,17 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
+  if (query.toLowerCase().includes("power of")) {
+    const numbers = query.match(/\d+/g);
+    if (numbers && numbers.length >= 2) {
+      // Using BigInt ensures accurate calculations for very large results
+      const base = BigInt(numbers[0]);
+      const exponent = BigInt(numbers[1]);
+      const result = base ** exponent;
+      return result.toString();
+    }
+  }
+
   if (query.toLowerCase().includes("largest")) {
     // Find numbers
     const numbers = query.match(/\d+/g);
