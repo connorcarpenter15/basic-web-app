@@ -18,5 +18,26 @@ export default function QueryProcessor(query: string): string {
     return "ccarpent";
   }
 
+  if (query.toLowerCase().includes("plus")) {
+    // Find numbers
+    const numbers = query.match(/\d+/g);
+    if (numbers) {
+      const sum = numbers.reduce((a, b) => a + parseInt(b), 0);
+      return sum.toString();
+    }
+  }
+
+  if (query.toLowerCase().includes("largest")) {
+    // Find numbers
+    const numbers = query.match(/\d+/g);
+    if (numbers) {
+      const sum = numbers.reduce(
+        (a, b) => Math.max(a, parseInt(b)),
+        Number.NEGATIVE_INFINITY,
+      );
+      return sum.toString();
+    }
+  }
+
   return "";
 }
