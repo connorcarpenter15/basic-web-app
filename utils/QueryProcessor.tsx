@@ -31,7 +31,7 @@ export default function QueryProcessor(query: string): string {
     // Find numbers
     const numbers = query.match(/\d+/g);
     if (numbers) {
-      const sum = numbers.reduce((a, b) => a * parseInt(b), 0);
+      const sum = numbers.reduce((a, b) => a * parseInt(b), 1);
       return sum.toString();
     }
   }
