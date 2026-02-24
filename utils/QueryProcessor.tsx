@@ -7,12 +7,15 @@ export default function QueryProcessor(query: string): string {
     );
   }
 
-  if (query.toLowerCase().includes("andrew id")) {
+  if (
+    query.toLowerCase().includes("andrew id") ||
+    query.toLowerCase().includes("andrewid")
+  ) {
     return "ccarpent";
   }
 
   if (query.toLowerCase().includes("name")) {
-    return "Connor";
+    return "ccarpent";
   }
 
   return "";
