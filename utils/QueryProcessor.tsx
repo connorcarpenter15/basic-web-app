@@ -47,6 +47,34 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
+  if (query.toLowerCase().includes("anagram of")) {
+    // Extract the target word and the list of candidates
+    // Example format: "Which of the following is an anagram of dictionary: indicatory, abdication, butterfly, incendiary?"
+    const match = query.match(/anagram of (\w+):\s*(.*)/i);
+
+    if (match) {
+      const baseWord = match[1].toLowerCase();
+      // Remove any trailing question marks from the candidates list
+      const candidatesString = match[2].replace(/\?/g, "");
+
+      // Split the candidates by comma and clean up whitespace
+      const candidates = candidatesString
+        .split(",")
+        .map((word) => word.trim().toLowerCase());
+
+      // Helper function to sort the characters of a word alphabetically
+      const sortWord = (w: string) => w.split("").sort().join("");
+      const sortedBase = sortWord(baseWord);
+
+      // Find all candidates whose sorted characters match the base word's sorted characters
+      const anagrams = candidates.filter(
+        (word) => sortWord(word) === sortedBase,
+      );
+
+      return anagrams.join(", ");
+    }
+  }
+
   if (query.toLowerCase().includes("plus")) {
     // Find numbers
     const numbers = query.match(/\d+/g);
