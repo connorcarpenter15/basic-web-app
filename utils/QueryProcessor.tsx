@@ -36,6 +36,15 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
+  if (query.toLowerCase().includes("minus")) {
+    const numbers = query.match(/\d+/g);
+    if (numbers && numbers.length >= 2) {
+      // Assuming the format is always "What is X minus Y?"
+      const result = parseInt(numbers[0]) - parseInt(numbers[1]);
+      return result.toString();
+    }
+  }
+
   if (query.toLowerCase().includes("largest")) {
     // Find numbers
     const numbers = query.match(/\d+/g);
